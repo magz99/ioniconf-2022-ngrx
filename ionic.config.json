@@ -1,0 +1,7 @@
+{
+  "name": "ioniconf-ngrx-routing",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
