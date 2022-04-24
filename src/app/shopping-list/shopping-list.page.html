@@ -1,28 +1,52 @@
-<ion-header  translucent="true">
-  <ion-toolbar>
-    <ion-buttons slot="secondary">
-      <ion-button aria-label="Clear the shopping list" (click)="clearShoppingList()">
-        Clear
-      </ion-button>
-    </ion-buttons>
-    <ion-title>
-      Shopping List
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ng-container *ngIf="vm$ | async as vm">
+  <ion-header translucent="true">
+    <ion-toolbar>
+      <ion-buttons slot="secondary">
+        <ion-button
+          aria-label="Clear the shopping list"
+          (click)="clearShoppingList()"
+        >
+          Clear
+        </ion-button>
+      </ion-buttons>
+      <ion-title> Shopping List </ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-list>
-    <!-- Sliding item with text options on both sides -->
-  <ion-item-sliding #item *ngFor="let _ of [].constructor(15); let i = index">
-    <ion-item-options side="start">
-      <ion-item-option color="danger" (click)="remove(i.toString())" expandable>Remove</ion-item-option>
-    </ion-item-options>
+  <ion-content [fullscreen]="true">
+    <ion-list>
+      <!-- Sliding item with text options on both sides -->
+      <ion-item-sliding
+        #listItem
+        *ngFor="let foodItem of vm.foodItems; let i = index"
+      >
+        <ion-item-options side="start">
+          <ion-item-option
+            color="danger"
+            (click)="remove(i.toString())"
+            expandable
+            >Remove</ion-item-option
+          >
+        </ion-item-options>
 
-    <ion-item [detail]="false" [routerLink]="['/item-detail',i,'summary']">
-      <ion-label>Food item {{i}}</ion-label>
-      <ion-checkbox #checkbox [attr.aria-label]="checkbox.checked ? 'Set item to not purchased' : 'Set item to purchased'" slot="end" (ionChange)="purchased(i.toString())"></ion-checkbox>
-    </ion-item>
-  </ion-item-sliding>
-  </ion-list>
-</ion-content>
+        <ion-item>
+          <ion-label>{{foodItem.name}}</ion-label>
+          <ion-checkbox
+            slot="end"
+            #checkbox
+            [attr.aria-label]="checkbox.checked ? 'Set item to not purchased' : 'Set item to purchased'"
+            (ionChange)="purchased(i.toString())"
+          ></ion-checkbox>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option
+            (click)="viewDetails(i.toString()); listItem.close()"
+            expandable
+            >Item Details</ion-item-option
+          >
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </ion-content>
+</ng-container>
