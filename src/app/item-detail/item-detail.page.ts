@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { SegmentChangeEventDetail } from '@ionic/angular';
 import { ItemDetailStore } from './item-detail.store';
@@ -9,10 +9,12 @@ import { ItemDetailStore } from './item-detail.store';
   styleUrls: ['./item-detail.page.scss'],
   providers: [ItemDetailStore],
 })
-export class ItemDetailPage {
+export class ItemDetailPage implements OnDestroy {
   readonly vm$ = this.store.vm$;
 
-  constructor(private readonly store: ItemDetailStore) {}
+  constructor(private readonly store: ItemDetailStore) {
+    console.log('item detail page constructor');
+  }
 
   segmentChanged(event: Event): void {
     const segmentValue = (event as CustomEvent<SegmentChangeEventDetail>).detail
@@ -21,5 +23,9 @@ export class ItemDetailPage {
 
     // Call the updater to update the selectedSegment
     this.store.navigateToSegment(segmentValue);
+  }
+
+  ngOnDestroy(): void {
+    console.log('item detail page: destroy');
   }
 }
