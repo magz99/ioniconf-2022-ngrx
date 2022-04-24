@@ -1,29 +1,31 @@
 <ng-container *ngIf="vm$ | async as vm">
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Item Detail Name_Here</ion-title>
-  </ion-toolbar>
-</ion-header>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Item Detail Name_Here</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content>
-  <ion-segment (ionChange)="segmentChanged($event)" [value]="vm.selectedSegment">
-    <ion-segment-button value="summary">
-      <ion-label>Summary</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="price-history">
-      <ion-label>Price History</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+  <ion-content>
+    <ion-segment
+      (ionChange)="segmentChanged($event)"
+      [value]="vm.selectedSegment"
+    >
+      <ion-segment-button value="summary">
+        <ion-label>Summary</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="price-history">
+        <ion-label>Price History</ion-label>
+      </ion-segment-button>
+    </ion-segment>
 
-  <section *ngIf="vm.selectedSegment === 'summary'">
-    Summary Section
-  </section>
-  <section *ngIf="vm.selectedSegment === 'price-history'">
-    Price History Section
-  </section>
-
-</ion-content>
+    <section *ngIf="vm.selectedSegment === 'summary'">
+      <app-summary></app-summary>
+    </section>
+    <section *ngIf="vm.selectedSegment === 'price-history'">
+      <app-price-history></app-price-history>
+    </section>
+  </ion-content>
 </ng-container>

@@ -1,11 +1,41 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Items
-    </ion-title>
+    <ion-title> Items </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add" aria-label="Create an item"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-list>
+    <!-- Sliding item with text options on both sides -->
+    <ion-item-sliding #item *ngFor="let _ of [].constructor(15); let i = index">
+      <ion-item-options side="start">
+        <ion-item-option
+          color="danger"
+          (click)="delete(i.toString())"
+          expandable
+          >Delete Item</ion-item-option
+        >
+      </ion-item-options>
 
+      <ion-item [detail]="false" [routerLink]="['/item-detail',i,'summary']">
+        <ion-label>Food item {{i}}</ion-label>
+        <ion-icon
+          name="checkmark-circle-outline"
+          *ngIf="i%2===0"
+          role="img"
+          slot="end"
+        ></ion-icon>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option (click)="addToShoppingList(i.toString())" expandable
+          >Add to List</ion-item-option
+        >
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>

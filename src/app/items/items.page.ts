@@ -8,10 +8,14 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 })
 export class ItemsPage implements OnDestroy {
   constructor() {
-    console.log('app-tab 2 constructor');
+    console.log('items component constructor');
   }
 
   ngOnDestroy(): void {
-    console.log('app-tab 2 destroy');
+    console.log('items component destroy');
   }
+
+  delete(itemId: string): void {}
+
+  addToShoppingList(itemId: string): void {}
 }
