@@ -30,7 +30,4 @@ npm-debug.log*
 /platforms
 /plugins
 /www
-<<<<<<< HEAD
 node_modules
-=======
->>>>>>> d25d5cf6 (Initial commit)
