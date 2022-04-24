@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ShoppingListStore } from './shopping-list.store';
-
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-shopping-list',
   templateUrl: 'shopping-list.page.html',
@@ -9,9 +10,15 @@ import { ShoppingListStore } from './shopping-list.store';
   providers: [ShoppingListStore],
 })
 export class ShoppingListPage {
+  readonly items: Observable<any[]>;
   readonly vm$ = this.store.vm$;
 
-  constructor(private readonly store: ShoppingListStore) {}
+  constructor(
+    private readonly firestore: AngularFirestore,
+    private readonly store: ShoppingListStore
+  ) {
+    this.items = firestore.collection('food-items').valueChanges();
+  }
 
   clearShoppingList(): void {}
 

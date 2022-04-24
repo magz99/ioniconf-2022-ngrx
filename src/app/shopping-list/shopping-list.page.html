@@ -48,5 +48,8 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
+    <ul>
+      <li class="text" *ngFor="let item of items | async">{{ item | json }}</li>
+    </ul>
   </ion-content>
 </ng-container>
