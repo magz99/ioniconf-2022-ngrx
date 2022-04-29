@@ -3,7 +3,7 @@ export interface HistoricalPrice {
   date: Date;
 }
 
-export interface FoodItem {
+export interface ShoppingItem {
   name: string;
   brand: string;
   price: number;
@@ -12,4 +12,6 @@ export interface FoodItem {
   prices: HistoricalPrice[];
   store: string;
   image: string;
+  itemId: string;
+  isInList: boolean;
 }

@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { ComponentStore } from '@ngrx/component-store';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { FoodItem } from '../shared/food-item.interface';
+import { ShoppingItem } from '../shared/food-item.interface';
 
 interface ShoppingListStoreState {
-  items: FoodItem[];
+  items: ShoppingItem[];
 }
 
 const initialState: ShoppingListStoreState = {
@@ -20,6 +20,8 @@ const initialState: ShoppingListStoreState = {
       prices: [],
       store: 'Longos',
       image: '',
+      itemId: '1',
+      isInList: true,
     },
     {
       name: 'milk',
@@ -30,6 +32,8 @@ const initialState: ShoppingListStoreState = {
       prices: [],
       store: 'Loblaws',
       image: '',
+      itemId: '2',
+      isInList: true,
     },
   ],
 };
