@@ -13,12 +13,7 @@ export class ShoppingListPage {
   readonly items: Observable<any[]>;
   readonly vm$ = this.store.vm$;
 
-  constructor(
-    private readonly firestore: AngularFirestore,
-    private readonly store: ShoppingListStore
-  ) {
-    this.items = firestore.collection('food-items').valueChanges();
-  }
+  constructor(private readonly store: ShoppingListStore) {}
 
   clearShoppingList(): void {}
 

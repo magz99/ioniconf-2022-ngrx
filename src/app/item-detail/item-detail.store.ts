@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ComponentStore } from '@ngrx/component-store';
 import { Observable } from 'rxjs';
-import { switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
+import { switchMap, take, tap } from 'rxjs/operators';
 import { RouterStateService } from '../router/router-state.service';
-
-type EmptyState = Record<string, never>;
+import { EmptyState } from '../shared/constants';
 
 @Injectable()
 export class ItemDetailStore extends ComponentStore<EmptyState> {
   // SELECTORS
 
-  readonly selectedSegment$ = this.routerStateService.detailSegment$; //this.select((state) => state.selectedSegment);
+  readonly selectedSegment$ = this.routerStateService.detailSegment$;
   readonly itemId$ = this.routerStateService.itemId$.pipe(take(1));
 
   readonly vm$ = this.select(this.selectedSegment$, (selectedSegment) => ({
