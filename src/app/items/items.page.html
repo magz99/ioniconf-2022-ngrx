@@ -1,14 +1,18 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title> Items </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ng-container *ngIf="vm$ | async as vm; else loading;">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title> Items </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
   <ion-content [fullscreen]="true">
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button>
-        <ion-icon name="add" aria-label="Create an item"></ion-icon>
+      <ion-fab-button id="add-item-button">
+        <ion-icon
+          name="add"
+          aria-label="Create an item"
+          (click)="addNewItem()"
+        ></ion-icon>
       </ion-fab-button>
     </ion-fab>
     <ion-list>
@@ -43,6 +47,98 @@
       </ion-item-sliding>
     </ion-list>
   </ion-content>
+
+  <ion-modal trigger="add-item-button" [canDismiss]="true" #modal>
+    <ng-template>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-buttons slot="secondary">
+            <ion-button
+              aria-label="Close the modal"
+              (click)="cancel(); modal.dismiss()"
+            >
+              Cancel
+            </ion-button>
+          </ion-buttons>
+          <ion-title> Create New Item </ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <form *ngIf="form" [formGroup]="form" (ngSubmit)="createItem()">
+          <ion-list>
+            <ion-item>
+              <ion-label>Name</ion-label>
+              <ion-input
+                maxlength="30"
+                type="text"
+                formControlName="name"
+                required
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Price</ion-label>
+              <ion-input
+                type="number"
+                formControlName="price"
+                inputmode="decimal"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Brand</ion-label>
+              <ion-input
+                maxlength="30"
+                type="text"
+                formControlName="brand"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Store</ion-label>
+              <ion-input
+                maxlength="30"
+                type="text"
+                formControlName="store"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Favourited?</ion-label>
+              <ion-checkbox
+                slot="end"
+                formControlName="favourited"
+              ></ion-checkbox>
+            </ion-item>
+            <ion-item>
+              <ion-label>Add to current Shopping List?</ion-label>
+              <ion-checkbox
+                slot="end"
+                formControlName="isInList"
+              ></ion-checkbox>
+            </ion-item>
+            <ion-item>
+              <ion-label>Image</ion-label>
+              <ion-input type="text" formControlName="image"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Notes</ion-label>
+              <ion-textarea
+                rows="3"
+                cols="20"
+                formControlName="notes"
+              ></ion-textarea>
+            </ion-item>
+          </ion-list>
+          <ion-button
+            class="ion-margin-top"
+            type="submit"
+            expand="full"
+            [disabled]="form.invalid"
+            (click)="modal.dismiss()"
+            >Create new item</ion-button
+          >
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ng-container>
 
 <ng-template #loading>
