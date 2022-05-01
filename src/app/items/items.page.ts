@@ -39,6 +39,10 @@ export class ItemsPage {
     console.log('add new item');
   }
 
+  viewDetails(itemId: string): void {
+    this.store.viewItemDetails(itemId);
+  }
+
   cancel(): void {
     this.resetValues();
   }

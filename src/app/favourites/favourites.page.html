@@ -1,41 +1,32 @@
-<ng-container *ngIf="vm$ | async as vm">
-  <ion-header translucent="true">
+<ng-container *ngIf="vm$ | async as vm; else loading;">
+  <ion-header [translucent]="true">
     <ion-toolbar>
-      <ion-buttons slot="secondary">
-        <ion-button
-          aria-label="Clear the shopping list"
-          (click)="clearShoppingList()"
-        >
-          Clear
-        </ion-button>
-      </ion-buttons>
-      <ion-title> Shopping List </ion-title>
+      <ion-title> Favourites </ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content [fullscreen]="true">
-    <ion-list>
+    <ion-list *ngIf="vm.items.length > 0; else emptyList">
       <!-- Sliding item with text options on both sides -->
-      <ion-item-sliding #listItem *ngFor="let item of vm.items;">
+      <ion-item-sliding #listItem *ngFor="let item of vm.items; let i = index">
         <ion-item-options side="start">
           <ion-item-option
             color="danger"
-            (click)="remove(item.itemId)"
+            (click)="unfavouriteItem(item.itemId)"
             expandable
-            >Remove</ion-item-option
+            >Delete Item</ion-item-option
           >
         </ion-item-options>
 
-        <ion-item>
+        <ion-item [detail]="false" (click)="addToShoppingList(item.itemId)">
           <ion-label>{{item.name}}</ion-label>
-          <ion-checkbox
+          <ion-icon
+            name="checkmark-circle-outline"
+            *ngIf="item.isInList"
+            role="img"
             slot="end"
-            #checkbox
-            [attr.aria-label]="checkbox.checked ? 'Set item to not purchased' : 'Set item to purchased'"
-            (ionChange)="purchased(item.itemId)"
-          ></ion-checkbox>
+          ></ion-icon>
         </ion-item>
-
         <ion-item-options side="end">
           <ion-item-option
             (click)="viewDetails(item.itemId); listItem.close()"
@@ -53,5 +44,5 @@
 </ng-template>
 
 <ng-template #emptyList>
-  <p class="ion-padding-start">You have no items in your shopping list.</p>
+  <p class="ion-padding-start">You currently have no favourited items.</p>
 </ng-template>

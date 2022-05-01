@@ -20,10 +20,10 @@ const routes: Routes = [
           import('../items/items.module').then((m) => m.ItemsPageModule),
       },
       {
-        path: 'favorites',
+        path: 'favourites',
         loadChildren: () =>
-          import('../favorites/favorites.module').then(
-            (m) => m.FavoritesPageModule
+          import('../favourites/favourites.module').then(
+            (m) => m.FavouritesPageModule
           ),
       },
       {

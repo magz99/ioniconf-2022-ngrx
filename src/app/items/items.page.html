@@ -17,7 +17,7 @@
     </ion-fab>
     <ion-list>
       <!-- Sliding item with text options on both sides -->
-      <ion-item-sliding #item *ngFor="let item of vm.items; let i = index">
+      <ion-item-sliding #listItem *ngFor="let item of vm.items; let i = index">
         <ion-item-options side="start">
           <ion-item-option
             color="danger"
@@ -27,10 +27,7 @@
           >
         </ion-item-options>
 
-        <ion-item
-          [detail]="false"
-          [routerLink]="['/item-detail',item.itemId,'summary']"
-        >
+        <ion-item [detail]="false" (click)="addToShoppingList(item.itemId)">
           <ion-label>{{item.name}}</ion-label>
           <ion-icon
             name="checkmark-circle-outline"
@@ -40,8 +37,10 @@
           ></ion-icon>
         </ion-item>
         <ion-item-options side="end">
-          <ion-item-option (click)="addToShoppingList(item.itemId)" expandable
-            >Add to List</ion-item-option
+          <ion-item-option
+            (click)="viewDetails(item.itemId); listItem.close()"
+            expandable
+            >Item Details</ion-item-option
           >
         </ion-item-options>
       </ion-item-sliding>
