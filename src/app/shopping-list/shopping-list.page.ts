@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
   providers: [ShoppingListStore],
 })
 export class ShoppingListPage {
-  readonly items: Observable<any[]>;
   readonly vm$ = this.store.vm$;
 
   constructor(private readonly store: ShoppingListStore) {}

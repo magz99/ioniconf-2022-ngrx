@@ -9,10 +9,13 @@ import { EmptyState } from '../shared/constants';
 import { ShoppingItem } from '../shared/food-item.interface';
 
 @Injectable()
-export class ItemsStore extends ComponentStore<EmptyState> {
-  readonly vm$ = this.select(this.firestoreService.items$, (items) => ({
-    items,
-  }));
+export class FavouritesStore extends ComponentStore<EmptyState> {
+  readonly vm$ = this.select(
+    this.firestoreService.favouriteItems$,
+    (items) => ({
+      items,
+    })
+  );
 
   readonly viewItemDetails = this.effect((itemId$: Observable<string>) =>
     itemId$.pipe(

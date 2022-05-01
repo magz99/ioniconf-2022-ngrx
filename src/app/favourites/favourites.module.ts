@@ -3,10 +3,10 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { FavoritesPage } from './favorites.page';
+import { FavouritesPage } from './favourites.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
-import { FavoritesPageRoutingModule } from './favorites-routing.module';
+import { FavoritesPageRoutingModule as FavouritesPageRoutingModule } from './favourites-routing.module';
 
 @NgModule({
   imports: [
@@ -14,9 +14,9 @@ import { FavoritesPageRoutingModule } from './favorites-routing.module';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    RouterModule.forChild([{ path: '', component: FavoritesPage }]),
-    FavoritesPageRoutingModule,
+    RouterModule.forChild([{ path: '', component: FavouritesPage }]),
+    FavouritesPageRoutingModule,
   ],
-  declarations: [FavoritesPage],
+  declarations: [FavouritesPage],
 })
-export class FavoritesPageModule {}
+export class FavouritesPageModule {}
