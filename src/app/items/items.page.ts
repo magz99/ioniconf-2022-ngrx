@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { of } from 'rxjs';
 import { ItemsStore } from './items.store';
 
 @Component({
@@ -9,18 +11,55 @@ import { ItemsStore } from './items.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ItemsStore],
 })
-export class ItemsPage implements OnDestroy {
+export class ItemsPage {
+  readonly form: FormGroup;
   readonly vm$ = this.store.vm$;
 
-  constructor(private readonly store: ItemsStore) {
-    console.log('items component constructor');
-  }
-
-  ngOnDestroy(): void {
-    console.log('items component destroy');
+  constructor(
+    private readonly formBuilder: FormBuilder,
+    private readonly store: ItemsStore
+  ) {
+    this.form = this.formBuilder.group({
+      name: ['', Validators.required],
+      brand: [''],
+      price: [0],
+      favourited: false,
+      image: [''],
+      isInList: false,
+      notes: [''],
+      store: [''],
+    });
   }
 
   delete(itemId: string): void {}
 
   addToShoppingList(itemId: string): void {}
+
+  addNewItem(): void {
+    console.log('add new item');
+  }
+
+  cancel(): void {
+    this.resetValues();
+  }
+
+  createItem(): void {
+    console.log('createItem');
+    console.log('form values: ', this.form.value);
+    this.store.addItem(this.form.value);
+    this.resetValues();
+  }
+
+  resetValues(): void {
+    this.form.patchValue({
+      name: '',
+      brand: '',
+      price: 0,
+      favourited: false,
+      image: '',
+      isInList: false,
+      notes: '',
+      store: '',
+    });
+  }
 }
