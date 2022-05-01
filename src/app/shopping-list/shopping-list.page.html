@@ -49,7 +49,11 @@
 </ng-container>
 
 <ng-template #loading>
-  <ion-spinner name="dots"></ion-spinner>
+  <ion-progress-bar
+    color="primary"
+    value="0.5"
+    type="indeterminate"
+  ></ion-progress-bar>
 </ng-template>
 
 <ng-template #emptyList>

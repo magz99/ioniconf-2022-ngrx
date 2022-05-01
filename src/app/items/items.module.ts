@@ -7,6 +7,7 @@ import { ItemsPage } from './items.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { ItemsPageRoutingModule } from './items-routing.module';
+import { CreateItemModalModule } from '../create-item-modal/create-item-modal.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { ItemsPageRoutingModule } from './items-routing.module';
     ExploreContainerComponentModule,
     ItemsPageRoutingModule,
     ReactiveFormsModule,
+    CreateItemModalModule,
   ],
   declarations: [ItemsPage],
 })
