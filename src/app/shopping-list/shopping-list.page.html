@@ -20,7 +20,7 @@
         <ion-item-options side="start">
           <ion-item-option
             color="danger"
-            (click)="remove(item.itemId)"
+            (click)=" listItem.close(); remove(item.itemId)"
             expandable
             >Remove</ion-item-option
           >
@@ -32,7 +32,6 @@
             slot="end"
             #checkbox
             [attr.aria-label]="checkbox.checked ? 'Set item to not purchased' : 'Set item to purchased'"
-            (ionChange)="purchased(item.itemId)"
           ></ion-checkbox>
         </ion-item>
 
