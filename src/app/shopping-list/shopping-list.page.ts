@@ -14,14 +14,12 @@ export class ShoppingListPage {
 
   constructor(private readonly store: ShoppingListStore) {}
 
-  clearShoppingList(): void {}
-
-  purchased(itemId: string): void {
-    console.log('purchased!');
+  clearShoppingList(): void {
+    this.store.clearShoppingList();
   }
 
   remove(itemId: string): void {
-    console.log('remove!');
+    this.store.removeFromShoppingList(itemId);
   }
 
   viewDetails(itemId: string): void {

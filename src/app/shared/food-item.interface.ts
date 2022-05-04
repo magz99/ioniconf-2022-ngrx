@@ -6,6 +6,7 @@ export interface HistoricalPrice {
 export interface ShoppingItem {
   name: string;
   brand: string;
+  favourited: boolean;
   price: number;
   purchased: boolean;
   notes: string;

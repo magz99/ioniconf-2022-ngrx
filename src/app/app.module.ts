@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { ROUTER_FEATURE_KEY } from './router/selectors';
 import { environment } from 'src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { FirestoreService } from './firestore/firestore.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +32,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
       serializer: MinimalRouterStateSerializer,
     }),
   ],
+  providers: [FirestoreService],
   // Because we are keeping track of secondary tabs in the URL, we are commenting this out
   // to prevent the tab change from being treated like a new page navigation
   //providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
