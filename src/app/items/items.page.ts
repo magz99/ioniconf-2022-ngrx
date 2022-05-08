@@ -1,16 +1,18 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { GroceryItem } from '../shared/grocery-item.interface';
+import { ItemsStore } from './items.store';
 
 @Component({
   selector: 'app-items',
   templateUrl: 'items.page.html',
   styleUrls: ['items.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ItemsStore],
 })
 export class ItemsPage {
-  readonly items = [];
+  readonly vm$ = this.store.viewModel$;
 
-  constructor() {}
+  constructor(private readonly store: ItemsStore) {}
 
   delete(itemId: string): void {}
 

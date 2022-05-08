@@ -1,4 +1,6 @@
-export const INITIAL_DATA = [
+import { GroceryItem } from '../shared/grocery-item.interface';
+
+export const INITIAL_DATA: GroceryItem[] = [
   {
     notes: 'Price per lbs.',
     favourited: false,
