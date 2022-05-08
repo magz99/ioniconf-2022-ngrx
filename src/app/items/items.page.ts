@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ShoppingItem } from '../shared/food-item.interface';
+import { GroceryItem } from '../shared/grocery-item.interface';
 
 @Component({
   selector: 'app-items',
@@ -18,7 +18,7 @@ export class ItemsPage {
     console.log('implement addToShoppingList!');
   }
 
-  handleCreatedItem(newItem: ShoppingItem): void {
+  handleCreatedItem(newItem: GroceryItem): void {
     console.log('implement handleCreatedItem!');
   }
 

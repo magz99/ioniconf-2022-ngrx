@@ -3,7 +3,7 @@ export interface HistoricalPrice {
   date: Date;
 }
 
-export interface ShoppingItem {
+export interface GroceryItem {
   name: string;
   brand: string;
   favourited: boolean;
