@@ -8,7 +8,7 @@
         Clear
       </ion-button>
     </ion-buttons>
-    <ion-title> Shopping List </ion-title>
+    <ion-title> Shopping List ({{items.length}}) </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -37,7 +37,11 @@
           *ngIf="item.purchased"
           [attr.aria-label]="item.name + ' has been added to your basket'"
         ></ion-icon>
-        <ion-button slot="end" fill="clear" shape="round"
+        <ion-button
+          slot="end"
+          fill="clear"
+          shape="round"
+          (click)="toggleFavouriteItem($event, item.itemId)"
           ><ion-icon name="star-outline" *ngIf="!item.favourited"></ion-icon
           ><ion-icon name="star" *ngIf="item.favourited"></ion-icon
         ></ion-button>
