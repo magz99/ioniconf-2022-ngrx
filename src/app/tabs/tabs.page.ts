@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ItemsStore } from './items.store';
+import { ItemsStore } from './tabs.store';
 
 @Component({
   selector: 'app-tabs',

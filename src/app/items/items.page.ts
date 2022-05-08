@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ShoppingItem } from '../shared/food-item.interface';
-import { ItemsStore } from '../tabs/items.store';
+import { ItemsStore } from '../tabs/tabs.store';
 
 @Component({
   selector: 'app-items',

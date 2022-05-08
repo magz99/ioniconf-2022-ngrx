@@ -4,7 +4,7 @@ import {
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { ITEMS_COLLECTION } from '../shared/constants';
 import { ShoppingItem } from '../shared/food-item.interface';
 
@@ -41,6 +41,41 @@ export class FirestoreService {
     .pipe(map((items) => items as ShoppingItem[]));
 
   constructor(private readonly firestore: AngularFirestore) {}
+
+  toggleFavourite(itemId: string): void {
+    const itemDoc = this.favouritesCollection.doc(itemId);
+
+    itemDoc.get().pipe(
+      tap((itemSnapshot) => {
+        void itemDoc.update({
+          favourited: !itemSnapshot.get('favourited'),
+        });
+      })
+    );
+  }
+
+  toggleInShoppingList(itemId: string): void {
+    const itemDoc = this.favouritesCollection.doc(itemId);
+
+    itemDoc.get().pipe(
+      tap((itemSnapshot) => {
+        void itemDoc.update({
+          favourited: !itemSnapshot.get('isInList'),
+        });
+      })
+    );
+  }
+
+  clearList(): void {
+    this.shoppingListCollection.get().pipe(
+      tap((items) => {
+        items.docs.forEach((doc) => {
+          const itemDocRef = this.favouritesCollection.doc(doc.id);
+          void itemDocRef.update({ isInList: false });
+        });
+      })
+    );
+  }
 
   addItemToCollection(item: ShoppingItem): void {
     this.itemCollection.add(item);
