@@ -5,7 +5,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ShoppingItem } from '../shared/food-item.interface';
+import { GroceryItem } from '../shared/grocery-item.interface';
 
 @Component({
   selector: 'app-create-item-modal',
@@ -14,8 +14,8 @@ import { ShoppingItem } from '../shared/food-item.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateItemModalComponent {
-  @Output() createItem: EventEmitter<ShoppingItem> =
-    new EventEmitter<ShoppingItem>();
+  @Output() createItem: EventEmitter<GroceryItem> =
+    new EventEmitter<GroceryItem>();
   readonly form: FormGroup;
 
   constructor(private readonly formBuilder: FormBuilder) {
