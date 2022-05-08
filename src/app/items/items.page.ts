@@ -18,6 +18,11 @@ export class ItemsPage {
     console.log('implement addToShoppingList!');
   }
 
+  toggleFavouriteItem(ev: Event, itemId: string): void {
+    ev.stopPropagation();
+    console.log('implement toggleFavouriteItem!');
+  }
+
   handleCreatedItem(newItem: GroceryItem): void {
     console.log('implement handleCreatedItem!');
   }

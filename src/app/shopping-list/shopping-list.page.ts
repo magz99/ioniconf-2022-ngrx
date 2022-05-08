@@ -18,7 +18,8 @@ export class ShoppingListPage {
     console.log('implement setItemPurchased!');
   }
 
-  toggleFavouriteItem(itemId: string): void {
+  toggleFavouriteItem(ev: Event, itemId: string): void {
+    ev.stopPropagation();
     console.log('implement toggleFavouriteItem!');
   }
 
