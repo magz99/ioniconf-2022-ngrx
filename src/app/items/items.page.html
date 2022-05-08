@@ -1,55 +1,57 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title> Items ({{items.length}}) </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ng-container *ngIf="vm$ | async as vm">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title> Items ({{vm.count}}) </ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button id="add-item-button">
-      <ion-icon name="add" aria-label="Create an item"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-  <ion-list *ngIf="items.length; else emptyList">
-    <!-- Sliding item with text options on both sides -->
-    <ion-item-sliding #listItem *ngFor="let item of items; let i = index">
-      <ion-item-options side="start">
-        <ion-item-option
-          color="danger"
-          (click)="listItem.close();delete(item.itemId)"
-          expandable
-          >Delete Item</ion-item-option
-        >
-      </ion-item-options>
+  <ion-content [fullscreen]="true">
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button id="add-item-button">
+        <ion-icon name="add" aria-label="Create an item"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-list *ngIf="vm.items.length; else emptyList">
+      <!-- Sliding item with text options on both sides -->
+      <ion-item-sliding #listItem *ngFor="let item of vm.items; let i = index">
+        <ion-item-options side="start">
+          <ion-item-option
+            color="danger"
+            (click)="listItem.close();delete(item.itemId)"
+            expandable
+            >Delete Item</ion-item-option
+          >
+        </ion-item-options>
 
-      <ion-item [detail]="false" (click)="addToShoppingList(item.itemId)">
-        <ion-label>{{item.name}}</ion-label>
-        <ion-icon
-          name="checkmark-circle-outline"
-          *ngIf="item.isInList"
-          role="img"
-          slot="end"
-          class="purchased-icon"
-        ></ion-icon>
-        <ion-button
-          slot="end"
-          fill="clear"
-          shape="round"
-          (click)="toggleFavouriteItem($event, item.itemId)"
-          ><ion-icon name="star-outline" *ngIf="!item.favourited"></ion-icon
-          ><ion-icon name="star" *ngIf="item.favourited"></ion-icon
-        ></ion-button>
-      </ion-item>
-      <ion-item-options side="end">
-        <ion-item-option
-          (click)="viewDetails(item.itemId); listItem.close()"
-          expandable
-          >Item Details</ion-item-option
-        >
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
-</ion-content>
+        <ion-item [detail]="false" (click)="addToShoppingList(item.itemId)">
+          <ion-label>{{item.name}}</ion-label>
+          <ion-icon
+            name="checkmark-circle-outline"
+            *ngIf="item.isInList"
+            role="img"
+            slot="end"
+            class="purchased-icon"
+          ></ion-icon>
+          <ion-button
+            slot="end"
+            fill="clear"
+            shape="round"
+            (click)="toggleFavouriteItem($event, item.itemId)"
+            ><ion-icon name="star-outline" *ngIf="!item.favourited"></ion-icon
+            ><ion-icon name="star" *ngIf="item.favourited"></ion-icon
+          ></ion-button>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option
+            (click)="viewDetails(item.itemId); listItem.close()"
+            expandable
+            >Item Details</ion-item-option
+          >
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </ion-content>
+</ng-container>
 
 <app-create-item-modal
   (createItem)="handleCreatedItem($event)"
