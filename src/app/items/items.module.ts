@@ -1,20 +1,16 @@
-import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ItemsPage } from './items.page';
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
-
-import { ItemsPageRoutingModule } from './items-routing.module';
+import { IonicModule } from '@ionic/angular';
 import { CreateItemModalModule } from '../create-item-modal/create-item-modal.module';
+import { ItemsPageRoutingModule } from './items-routing.module';
+import { ItemsPage } from './items.page';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    ExploreContainerComponentModule,
     ItemsPageRoutingModule,
     ReactiveFormsModule,
     CreateItemModalModule,

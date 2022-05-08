@@ -3,7 +3,7 @@ export const INITIAL_DATA = {
     {
       notes: 'Price per lbs.',
       favourited: false,
-      purchased: false,
+      purchased: true,
       store: 'Loblaws',
       brand: 'gala',
       image: 'test',

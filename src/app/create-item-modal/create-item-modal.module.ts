@@ -1,8 +1,8 @@
-import { IonicModule } from '@ionic/angular';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CreateItemModalComponent as CreateItemModalComponent } from './create-item-modal.component';
+import { IonicModule } from '@ionic/angular';
+import { CreateItemModalComponent } from './create-item-modal.component';
 
 @NgModule({
   imports: [IonicModule, CommonModule, FormsModule, ReactiveFormsModule],
