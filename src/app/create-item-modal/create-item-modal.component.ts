@@ -1,9 +1,8 @@
 import {
-  Component,
-  OnInit,
   ChangeDetectionStrategy,
-  Output,
+  Component,
   EventEmitter,
+  Output,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ShoppingItem } from '../shared/food-item.interface';

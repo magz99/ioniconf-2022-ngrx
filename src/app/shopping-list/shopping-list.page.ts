@@ -1,28 +1,32 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ShoppingListStore } from './shopping-list.store';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
 @Component({
   selector: 'app-shopping-list',
   templateUrl: 'shopping-list.page.html',
   styleUrls: ['shopping-list.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ShoppingListStore],
 })
 export class ShoppingListPage {
-  readonly vm$ = this.store.vm$;
+  readonly items = [];
 
-  constructor(private readonly store: ShoppingListStore) {}
+  constructor() {}
 
   clearShoppingList(): void {
-    this.store.clearShoppingList();
+    console.log('implement clearShoppingList!');
+  }
+
+  setItemPurchased(itemId: string): void {
+    console.log('implement setItemPurchased!');
+  }
+
+  toggleFavouriteItem(itemId: string): void {
+    console.log('implement toggleFavouriteItem!');
   }
 
   remove(itemId: string): void {
-    this.store.removeFromShoppingList(itemId);
+    console.log('implement remove!');
   }
 
   viewDetails(itemId: string): void {
-    this.store.viewItemDetails(itemId);
+    console.log('implement viewDetails!');
   }
 }

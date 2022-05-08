@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CreateItemModalComponent } from './create-item-modal.component';
 
 describe('CreateItemModalContentComponent', () => {

@@ -1,43 +1,41 @@
-<ng-container *ngIf="vm$ | async as vm; else loading;">
-  <ion-header [translucent]="true">
-    <ion-toolbar>
-      <ion-title> Favourites </ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Favourites </ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-content [fullscreen]="true">
-    <ion-list *ngIf="vm.items.length > 0; else emptyList">
-      <!-- Sliding item with text options on both sides -->
-      <ion-item-sliding #listItem *ngFor="let item of vm.items; let i = index">
-        <ion-item-options side="start">
-          <ion-item-option
-            color="danger"
-            (click)="unfavouriteItem(item.itemId)"
-            expandable
-            >Delete Item</ion-item-option
-          >
-        </ion-item-options>
+<ion-content [fullscreen]="true">
+  <ion-list *ngIf="items.length; else emptyList">
+    <!-- Sliding item with text options on both sides -->
+    <ion-item-sliding #listItem *ngFor="let item of items; let i = index">
+      <ion-item-options side="start">
+        <ion-item-option
+          color="danger"
+          (click)="unfavouriteItem(item.itemId)"
+          expandable
+          >Delete Item</ion-item-option
+        >
+      </ion-item-options>
 
-        <ion-item [detail]="false" (click)="addToShoppingList(item.itemId)">
-          <ion-label>{{item.name}}</ion-label>
-          <ion-icon
-            name="checkmark-circle-outline"
-            *ngIf="item.isInList"
-            role="img"
-            slot="end"
-          ></ion-icon>
-        </ion-item>
-        <ion-item-options side="end">
-          <ion-item-option
-            (click)="viewDetails(item.itemId); listItem.close()"
-            expandable
-            >Item Details</ion-item-option
-          >
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
-  </ion-content>
-</ng-container>
+      <ion-item [detail]="false" (click)="addToShoppingList(item.itemId)">
+        <ion-label>{{item.name}}</ion-label>
+        <ion-icon
+          name="checkmark-circle-outline"
+          *ngIf="item.isInList"
+          role="img"
+          slot="end"
+        ></ion-icon>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option
+          (click)="viewDetails(item.itemId); listItem.close()"
+          expandable
+          >Item Details</ion-item-option
+        >
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
 
 <ng-template #loading>
   <ion-progress-bar
@@ -48,5 +46,8 @@
 </ng-template>
 
 <ng-template #emptyList>
-  <p class="ion-padding-start">You currently have no favourited items.</p>
+  <p class="ion-padding-start ion-padding-end">
+    You have no favourited items. You can favourite an item by visiting the
+    Items tab and pressing the "Favourite" button on an item.
+  </p>
 </ng-template>
