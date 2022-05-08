@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { ItemsStore } from '../tabs/items.store';
+import { ItemsStore } from '../tabs/tabs.store';
 import { EmptyState } from '../shared/constants';
 
 @Injectable()
