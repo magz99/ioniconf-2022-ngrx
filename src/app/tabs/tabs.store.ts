@@ -16,19 +16,39 @@ const initialState: TabsStoreState = {
 export class TabsStore extends ComponentStore<TabsStoreState> {
   readonly items$ = this.select((state: TabsStoreState) => state.items);
 
-  private readonly count$ = this.select(this.items$, (items) => items.length);
+  readonly updateIsItemInList = this.updater((state, id: string) => {
+    const updatedItems = this.toggleItemProperty(state.items, id, 'isInList');
 
-  /**
-   * Expose the observable values you want to display in your component
-   */
-  readonly viewModel$ = this.select(
-    this.items$,
-    this.count$,
-    (items, count) => ({
-      items,
-      count,
-    })
-  );
+    return {
+      ...state,
+      items: updatedItems,
+    };
+  });
+
+  readonly updateItemIsFavourite = this.updater((state, id: string) => {
+    const updatedItems = this.toggleItemProperty(state.items, id, 'favourited');
+
+    return {
+      ...state,
+      items: updatedItems,
+    };
+  });
+
+  toggleItemProperty(
+    items: GroceryItem[],
+    id: string,
+    itemProperty: string
+  ): GroceryItem[] {
+    const updatedItems = [...items];
+    const itemIndex = updatedItems.findIndex((item) => item.itemId === id);
+
+    if (itemIndex !== -1 && itemProperty in updatedItems[itemIndex]) {
+      updatedItems[itemIndex][itemProperty] =
+        !updatedItems[itemIndex][itemProperty];
+    }
+
+    return updatedItems;
+  }
 
   constructor() {
     super(initialState);

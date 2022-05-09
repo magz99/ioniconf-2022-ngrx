@@ -22,6 +22,10 @@ export class ItemsStore extends ComponentStore<EmptyState> {
     })
   );
 
+  updateIsItemInList = this.tabsStore.updateIsItemInList;
+
+  updateItemIsFavourite = this.tabsStore.updateItemIsFavourite;
+
   constructor(private readonly tabsStore: TabsStore) {
     super({});
   }

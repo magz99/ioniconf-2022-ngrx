@@ -4,7 +4,7 @@ export const INITIAL_DATA: GroceryItem[] = [
   {
     notes: 'Price per lbs.',
     favourited: false,
-    purchased: true,
+    purchased: false,
     store: 'Loblaws',
     brand: 'gala',
     image: 'test',

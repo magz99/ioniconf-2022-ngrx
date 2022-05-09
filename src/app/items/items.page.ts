@@ -17,12 +17,14 @@ export class ItemsPage {
   delete(itemId: string): void {}
 
   addToShoppingList(itemId: string): void {
-    console.log('implement addToShoppingList!');
+    // console.log('implement addToShoppingList!');
+    this.store.updateIsItemInList(itemId);
   }
 
   toggleFavouriteItem(ev: Event, itemId: string): void {
     ev.stopPropagation();
-    console.log('implement toggleFavouriteItem!');
+    // console.log('implement toggleFavouriteItem!');
+    this.store.updateItemIsFavourite(itemId);
   }
 
   handleCreatedItem(newItem: GroceryItem): void {
