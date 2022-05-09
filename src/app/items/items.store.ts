@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ComponentStore } from '@ngrx/component-store';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { EmptyState } from '../shared/constants';
 import { TabsStore } from '../tabs/tabs.store';
 
@@ -22,11 +25,22 @@ export class ItemsStore extends ComponentStore<EmptyState> {
     })
   );
 
-  updateIsItemInList = this.tabsStore.updateIsItemInList;
+  readonly updateIsItemInList = this.tabsStore.updateIsItemInList;
 
-  updateItemIsFavourite = this.tabsStore.updateItemIsFavourite;
+  readonly updateItemIsFavourite = this.tabsStore.updateItemIsFavourite;
 
-  constructor(private readonly tabsStore: TabsStore) {
+  readonly viewDetails = this.effect((itemId$: Observable<string>) =>
+    itemId$.pipe(
+      tap((itemId) => {
+        void this.router.navigate(['/item-detail', itemId, 'summary']);
+      })
+    )
+  );
+
+  constructor(
+    private readonly tabsStore: TabsStore,
+    private readonly router: Router
+  ) {
     super({});
   }
 }

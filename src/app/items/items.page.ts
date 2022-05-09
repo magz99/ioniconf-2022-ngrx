@@ -17,13 +17,11 @@ export class ItemsPage {
   delete(itemId: string): void {}
 
   addToShoppingList(itemId: string): void {
-    // console.log('implement addToShoppingList!');
     this.store.updateIsItemInList(itemId);
   }
 
   toggleFavouriteItem(ev: Event, itemId: string): void {
     ev.stopPropagation();
-    // console.log('implement toggleFavouriteItem!');
     this.store.updateItemIsFavourite(itemId);
   }
 
@@ -32,6 +30,6 @@ export class ItemsPage {
   }
 
   viewDetails(itemId: string): void {
-    console.log('implement viewDetails!');
+    this.store.viewDetails(itemId);
   }
 }

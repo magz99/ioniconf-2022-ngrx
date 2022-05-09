@@ -4,7 +4,7 @@
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/"></ion-back-button>
       </ion-buttons>
-      <ion-title>Item Detail Name_Here</ion-title>
+      <ion-title>Item Details</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -22,7 +22,34 @@
     </ion-segment>
 
     <section *ngIf="vm.selectedSegment === 'summary'">
-      <app-summary></app-summary>
+      <app-summary>
+        <ion-list>
+          <ion-item>
+            <ion-label position="stacked">Name</ion-label>
+            <ion-label>{{vm.itemData.name}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Brand</ion-label>
+            <ion-label>{{vm.itemData.brand}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Price</ion-label>
+            <ion-label>{{vm.itemData.price}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Store</ion-label>
+            <ion-label>{{vm.itemData.store}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Favourited</ion-label>
+            <ion-label>{{vm.itemData.favourited}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Notes</ion-label>
+            <ion-label>{{vm.itemData.notes}}</ion-label>
+          </ion-item>
+        </ion-list>
+      </app-summary>
     </section>
     <section *ngIf="vm.selectedSegment === 'price-history'">
       <app-price-history></app-price-history>
