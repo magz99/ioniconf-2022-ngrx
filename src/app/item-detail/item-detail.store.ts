@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ComponentStore } from '@ngrx/component-store';
-import { Observable } from 'rxjs';
-import { switchMap, take, tap } from 'rxjs/operators';
+import { EMPTY, Observable } from 'rxjs';
+import { catchError, switchMap, take, tap } from 'rxjs/operators';
+import { DataService } from '../data/data-service';
 import { RouterStateService } from '../router/router-state.service';
 import { EmptyState } from '../shared/constants';
 
@@ -12,10 +13,19 @@ export class ItemDetailStore extends ComponentStore<EmptyState> {
 
   readonly selectedSegment$ = this.routerStateService.detailSegment$;
   readonly itemId$ = this.routerStateService.itemId$.pipe(take(1));
+  readonly itemData$ = this.itemId$.pipe(
+    switchMap((itemId) => this.dataService.fetchItem(itemId)),
+    catchError((err: unknown) => EMPTY)
+  );
 
-  readonly vm$ = this.select(this.selectedSegment$, (selectedSegment) => ({
-    selectedSegment,
-  }));
+  readonly vm$ = this.select(
+    this.selectedSegment$,
+    this.itemData$,
+    (selectedSegment, itemData) => ({
+      selectedSegment,
+      itemData,
+    })
+  );
 
   // UPDATERS
 
@@ -34,7 +44,8 @@ export class ItemDetailStore extends ComponentStore<EmptyState> {
 
   constructor(
     private readonly router: Router,
-    private readonly routerStateService: RouterStateService
+    private readonly routerStateService: RouterStateService,
+    private readonly dataService: DataService
   ) {
     super({});
   }

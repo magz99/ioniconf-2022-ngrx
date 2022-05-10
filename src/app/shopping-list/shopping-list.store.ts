@@ -24,6 +24,8 @@ export class ShoppingListStore extends ComponentStore<EmptyState> {
     })
   );
 
+  readonly updateIsItemPurchased = this.tabsStore.updateIsItemPurchased;
+
   constructor(private readonly tabsStore: TabsStore) {
     super({});
   }
