@@ -34,6 +34,15 @@ export class TabsStore extends ComponentStore<TabsStoreState> {
     };
   });
 
+  readonly updateIsItemPurchased = this.updater((state, id: string) => {
+    const updatedItems = this.toggleItemProperty(state.items, id, 'purchased');
+
+    return {
+      ...state,
+      items: updatedItems,
+    };
+  });
+
   toggleItemProperty(
     items: GroceryItem[],
     id: string,

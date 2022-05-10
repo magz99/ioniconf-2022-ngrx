@@ -17,7 +17,7 @@ export class ShoppingListPage {
   }
 
   setItemPurchased(itemId: string): void {
-    console.log('implement setItemPurchased!');
+    this.store.updateIsItemPurchased(itemId);
   }
 
   toggleFavouriteItem(ev: Event, itemId: string): void {
