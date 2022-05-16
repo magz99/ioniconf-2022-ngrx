@@ -1,23 +1,23 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { GroceryItem } from '../shared/grocery-item.interface';
-import { ItemsStore } from './items.store';
+import { GroceryStore } from '../tabs/tabs.store';
 
 @Component({
-  selector: 'app-items',
-  templateUrl: 'items.page.html',
-  styleUrls: ['items.page.scss'],
+  selector: 'app-grocery-list',
+  templateUrl: 'grocery-list.page.html',
+  styleUrls: ['grocery-list.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ItemsStore],
 })
-export class ItemsPage {
-  readonly vm$ = this.store.viewModel$;
+export class GroceryListPage {
+  readonly items$ = this.store.items$;
+  readonly shoppingListIds$ = this.store.shoppingListIds$;
 
-  constructor(private readonly store: ItemsStore) {}
+  constructor(private readonly store: GroceryStore) {}
 
   delete(itemId: string): void {}
 
-  addToShoppingList(itemId: string): void {
-    this.store.updateIsItemInList(itemId);
+  toggleToShoppingList(itemId: string): void {
+    this.store.toggleItemToShoppingList(itemId);
   }
 
   toggleFavouriteItem(ev: Event, itemId: string): void {

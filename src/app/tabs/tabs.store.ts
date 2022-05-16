@@ -1,27 +1,45 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ComponentStore } from '@ngrx/component-store';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { INITIAL_DATA } from '../data/mock-data';
 import { GroceryItem } from '../shared/grocery-item.interface';
 
-export interface TabsStoreState {
+export interface GroceryStoreState {
   items: GroceryItem[];
+  shoppingListIds: string[];
 }
 
-const initialState: TabsStoreState = {
+const initialState: GroceryStoreState = {
   items: INITIAL_DATA,
+  shoppingListIds: [],
 };
 
 @Injectable()
-export class TabsStore extends ComponentStore<TabsStoreState> {
-  readonly items$ = this.select((state: TabsStoreState) => state.items);
+export class GroceryStore extends ComponentStore<GroceryStoreState> {
+  readonly items$ = this.select((state: GroceryStoreState) => state.items);
 
-  readonly updateIsItemInList = this.updater((state, id: string) => {
-    const updatedItems = this.toggleItemProperty(state.items, id, 'isInList');
+  readonly shoppingListIds$ = this.select(
+    (state: GroceryStoreState) => state.shoppingListIds
+  );
+  readonly shoppingListItems$ = this.select((state: GroceryStoreState) =>
+    state.items.filter((item) => state.shoppingListIds.includes(item.itemId))
+  );
 
+  readonly toggleItemToShoppingList = this.updater((state, id: string) => {
+    let updatedIds: string[] = [];
+    if (!state.shoppingListIds.includes(id)) {
+      // Add item
+      updatedIds = [id, ...state.shoppingListIds];
+    } else {
+      // Remove item
+      updatedIds = state.shoppingListIds.filter((itemId) => itemId !== id);
+    }
     return {
       ...state,
-      items: updatedItems,
+      shoppingListIds: updatedIds,
     };
   });
 
@@ -43,6 +61,14 @@ export class TabsStore extends ComponentStore<TabsStoreState> {
     };
   });
 
+  readonly viewDetails = this.effect((itemId$: Observable<string>) =>
+    itemId$.pipe(
+      tap((itemId) => {
+        void this.router.navigate(['/item-detail', itemId, 'summary']);
+      })
+    )
+  );
+
   toggleItemProperty(
     items: GroceryItem[],
     id: string,
@@ -59,7 +85,7 @@ export class TabsStore extends ComponentStore<TabsStoreState> {
     return updatedItems;
   }
 
-  constructor() {
+  constructor(private readonly router: Router) {
     super(initialState);
 
     this.state$.subscribe((state) => {
