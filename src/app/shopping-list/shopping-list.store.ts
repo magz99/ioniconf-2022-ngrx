@@ -8,6 +8,10 @@ import { GroceryStore } from '../tabs/grocery.store';
 export class ShoppingListStore extends ComponentStore<EmptyState> {
   private readonly items$ = this.groceryStore.shoppingListItems$;
 
+  private readonly favouritesListIds$ = this.groceryStore.favouritesListIds$;
+
+  private readonly purchasedListIds$ = this.groceryStore.purchasedListIds$;
+
   private readonly count$ = this.select(this.items$, (items) => items.length);
 
   /**
@@ -16,13 +20,21 @@ export class ShoppingListStore extends ComponentStore<EmptyState> {
   readonly viewModel$ = this.select(
     this.items$,
     this.count$,
-    (items, count) => ({
+    this.favouritesListIds$,
+    this.purchasedListIds$,
+    (items, count, favouritesListIds, purchasedListIds) => ({
       items,
       count,
+      favouritesListIds,
+      purchasedListIds,
     })
   );
 
-  readonly updateIsItemPurchased = this.groceryStore.updateIsItemPurchased;
+  readonly updateIsItemPurchased = this.groceryStore.toggleItemIsPurchased;
+
+  readonly toggleItemIsFavourited = this.groceryStore.toggleItemIsFavourited;
+
+  readonly toggleItemIsPurchased = this.groceryStore.toggleItemIsPurchased;
 
   constructor(private readonly groceryStore: GroceryStore) {
     super({});

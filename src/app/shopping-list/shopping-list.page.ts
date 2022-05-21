@@ -17,12 +17,12 @@ export class ShoppingListPage {
   }
 
   setItemPurchased(itemId: string): void {
-    this.store.updateIsItemPurchased(itemId);
+    this.store.toggleItemIsPurchased(itemId);
   }
 
   toggleFavouriteItem(ev: Event, itemId: string): void {
     ev.stopPropagation();
-    console.log('implement toggleFavouriteItem!');
+    this.store.toggleItemIsFavourited(itemId);
   }
 
   remove(itemId: string): void {

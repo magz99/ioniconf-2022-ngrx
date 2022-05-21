@@ -13,13 +13,19 @@ import { GroceryStore } from '../tabs/grocery.store';
 export class GroceryListPage {
   readonly items$ = this.store.items$;
   readonly shoppingListIds$ = this.store.shoppingListIds$;
+  readonly favouritesListIds$ = this.store.favouritesListIds$;
 
   // Example of combining some observables into one,
   // to be used by the template
-  readonly vm$ = combineLatest([this.items$, this.shoppingListIds$]).pipe(
-    map(([items, shoppingListIds]) => ({
+  readonly vm$ = combineLatest([
+    this.items$,
+    this.shoppingListIds$,
+    this.favouritesListIds$,
+  ]).pipe(
+    map(([items, shoppingListIds, favouritesListIds]) => ({
       items,
       shoppingListIds,
+      favouritesListIds,
     }))
   );
 
@@ -35,7 +41,7 @@ export class GroceryListPage {
 
   toggleFavouriteItem(ev: Event, itemId: string): void {
     ev.stopPropagation();
-    this.store.updateItemIsFavourite(itemId);
+    this.store.toggleItemIsFavourited(itemId);
   }
 
   handleCreatedItem(newItem: GroceryItem): void {

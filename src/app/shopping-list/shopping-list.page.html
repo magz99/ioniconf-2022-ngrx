@@ -35,7 +35,7 @@
             slot="end"
             role="img"
             class="purchased-icon"
-            *ngIf="item.purchased"
+            *ngIf="vm.purchasedListIds.includes(item.itemId)"
             [attr.aria-label]="item.name + ' has been added to your basket'"
           ></ion-icon>
           <ion-button
@@ -43,8 +43,14 @@
             fill="clear"
             shape="round"
             (click)="toggleFavouriteItem($event, item.itemId)"
-            ><ion-icon name="star-outline" *ngIf="!item.favourited"></ion-icon
-            ><ion-icon name="star" *ngIf="item.favourited"></ion-icon
+            ><ion-icon
+              name="star-outline"
+              *ngIf="!vm.favouritesListIds.includes(item.itemId)"
+            ></ion-icon
+            ><ion-icon
+              name="star"
+              *ngIf="vm.favouritesListIds.includes(item.itemId)"
+            ></ion-icon
           ></ion-button>
         </ion-item>
 
