@@ -10,11 +10,15 @@ import { GroceryItem } from '../shared/grocery-item.interface';
 export interface GroceryStoreState {
   items: GroceryItem[];
   shoppingListIds: string[];
+  favouritesListIds: string[];
+  purchasedListIds: string[];
 }
 
 const initialState: GroceryStoreState = {
   items: INITIAL_DATA,
   shoppingListIds: [],
+  favouritesListIds: [],
+  purchasedListIds: [],
 };
 
 @Injectable()
@@ -28,6 +32,7 @@ export class GroceryStore extends ComponentStore<GroceryStoreState> {
   readonly shoppingListIds$ = this.select(
     (state: GroceryStoreState) => state.shoppingListIds
   );
+
   readonly shoppingListItems$ = this.select(
     this.items$,
     this.shoppingListIds$,
@@ -35,40 +40,54 @@ export class GroceryStore extends ComponentStore<GroceryStoreState> {
       items.filter((item) => shoppingListIds.includes(item.itemId))
   );
 
-  readonly favouriteItems$ = this.select(this.items$, (items) =>
-    items.filter((item) => item.favourited)
+  readonly favouritesListIds$ = this.select(
+    (state: GroceryStoreState) => state.favouritesListIds
+  );
+
+  readonly favouriteItems$ = this.select(
+    this.items$,
+    this.favouritesListIds$,
+    (items, favouritesListIds) =>
+      items.filter((item) => favouritesListIds.includes(item.itemId))
+  );
+
+  readonly purchasedListIds$ = this.select(
+    (state: GroceryStoreState) => state.purchasedListIds
   );
 
   readonly toggleItemToShoppingList = this.updater((state, id: string) => {
-    let updatedIds: string[] = [];
-    if (!state.shoppingListIds.includes(id)) {
-      // Add item
-      updatedIds = [id, ...state.shoppingListIds];
-    } else {
-      // Remove item
-      updatedIds = state.shoppingListIds.filter((itemId) => itemId !== id);
-    }
+    const updatedIds: string[] = this.getUpdatedItemsList(
+      state.shoppingListIds,
+      id
+    );
+
     return {
       ...state,
       shoppingListIds: updatedIds,
     };
   });
 
-  readonly updateItemIsFavourite = this.updater((state, id: string) => {
-    const updatedItems = this.toggleItemProperty(state.items, id, 'favourited');
+  readonly toggleItemIsFavourited = this.updater((state, id: string) => {
+    const updatedIds: string[] = this.getUpdatedItemsList(
+      state.favouritesListIds,
+      id
+    );
 
     return {
       ...state,
-      items: updatedItems,
+      favouritesListIds: updatedIds,
     };
   });
 
-  readonly updateIsItemPurchased = this.updater((state, id: string) => {
-    const updatedItems = this.toggleItemProperty(state.items, id, 'purchased');
+  readonly toggleItemIsPurchased = this.updater((state, id: string) => {
+    const updatedIds: string[] = this.getUpdatedItemsList(
+      state.purchasedListIds,
+      id
+    );
 
     return {
       ...state,
-      items: updatedItems,
+      purchasedListIds: updatedIds,
     };
   });
 
@@ -82,27 +101,25 @@ export class GroceryStore extends ComponentStore<GroceryStoreState> {
     )
   );
 
-  toggleItemProperty(
-    items: GroceryItem[],
-    id: string,
-    itemProperty: string
-  ): GroceryItem[] {
-    const updatedItems = [...items];
-    const itemIndex = updatedItems.findIndex((item) => item.itemId === id);
+  getUpdatedItemsList(itemIds: string[], id: string): string[] {
+    let updatedIds = [...itemIds];
 
-    if (itemIndex !== -1 && itemProperty in updatedItems[itemIndex]) {
-      updatedItems[itemIndex][itemProperty] =
-        !updatedItems[itemIndex][itemProperty];
+    if (!itemIds.includes(id)) {
+      // Add item
+      updatedIds = [id, ...itemIds];
+    } else {
+      // Remove item
+      updatedIds = itemIds.filter((itemId) => itemId !== id);
     }
 
-    return updatedItems;
+    return updatedIds;
   }
 
   constructor(private readonly router: Router) {
     super(initialState);
 
     this.state$.subscribe((state) => {
-      console.log('TabsStore state: ', state);
+      console.log('GroceryStore state: ', state);
     });
   }
 }
