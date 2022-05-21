@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { GroceryItem } from '../shared/grocery-item.interface';
-import { GroceryStore } from '../tabs/tabs.store';
+import { GroceryStore } from '../tabs/grocery.store';
 
 @Component({
   selector: 'app-grocery-list',
@@ -12,9 +14,20 @@ export class GroceryListPage {
   readonly items$ = this.store.items$;
   readonly shoppingListIds$ = this.store.shoppingListIds$;
 
+  // Example of combining some observables into one,
+  // to be used by the template
+  readonly vm$ = combineLatest([this.items$, this.shoppingListIds$]).pipe(
+    map(([items, shoppingListIds]) => ({
+      items,
+      shoppingListIds,
+    }))
+  );
+
   constructor(private readonly store: GroceryStore) {}
 
-  delete(itemId: string): void {}
+  deleteItem(itemId: string): void {
+    console.log('implement deleteItem!');
+  }
 
   toggleToShoppingList(itemId: string): void {
     this.store.toggleItemToShoppingList(itemId);
@@ -29,7 +42,7 @@ export class GroceryListPage {
     console.log('implement handleCreatedItem!');
   }
 
-  viewDetails(itemId: string): void {
+  handleDetailClick(itemId: string): void {
     this.store.viewDetails(itemId);
   }
 }
