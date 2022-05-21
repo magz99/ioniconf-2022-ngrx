@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "ioniconf-ngrx-routing",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

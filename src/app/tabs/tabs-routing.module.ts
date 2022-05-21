@@ -15,12 +15,14 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'items',
+        path: 'grocery-list',
         loadChildren: () =>
-          import('../items/items.module').then((m) => m.ItemsPageModule),
+          import('../grocery-list/grocery-list.module').then(
+            (m) => m.GroceryListPageModule
+          ),
       },
       {
-        path: 'favourites',
+        path: 'favourites-list',
         loadChildren: () =>
           import('../favourites/favourites.module').then(
             (m) => m.FavouritesPageModule

@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { TabsStore } from './tabs.store';
+import { GroceryStore } from './tabs.store';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss'],
-  providers: [TabsStore],
+  providers: [GroceryStore],
 })
-export class TabsPage {
-  constructor(private readonly store: TabsStore) {}
-}
+export class TabsPage {}

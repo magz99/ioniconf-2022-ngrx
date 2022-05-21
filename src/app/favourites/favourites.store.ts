@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { EmptyState } from '../shared/constants';
-import { TabsStore } from '../tabs/tabs.store';
+import { GroceryStore } from '../tabs/tabs.store';
 
 @Injectable()
 export class FavouritesStore extends ComponentStore<EmptyState> {
@@ -24,7 +24,7 @@ export class FavouritesStore extends ComponentStore<EmptyState> {
     })
   );
 
-  constructor(private readonly tabsStore: TabsStore) {
+  constructor(private readonly tabsStore: GroceryStore) {
     super({});
   }
 }
