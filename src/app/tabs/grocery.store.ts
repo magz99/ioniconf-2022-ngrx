@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ComponentStore } from '@ngrx/component-store';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { filter, tap, withLatestFrom } from 'rxjs/operators';
 import { INITIAL_DATA } from '../data/mock-data';
 import { GroceryItem } from '../shared/grocery-item.interface';
 
@@ -21,11 +21,22 @@ const initialState: GroceryStoreState = {
 export class GroceryStore extends ComponentStore<GroceryStoreState> {
   readonly items$ = this.select((state: GroceryStoreState) => state.items);
 
+  readonly itemIds$ = this.select(this.items$, (items) =>
+    items.map((item) => item.itemId)
+  );
+
   readonly shoppingListIds$ = this.select(
     (state: GroceryStoreState) => state.shoppingListIds
   );
-  readonly shoppingListItems$ = this.select((state: GroceryStoreState) =>
-    state.items.filter((item) => state.shoppingListIds.includes(item.itemId))
+  readonly shoppingListItems$ = this.select(
+    this.items$,
+    this.shoppingListIds$,
+    (items, shoppingListIds) =>
+      items.filter((item) => shoppingListIds.includes(item.itemId))
+  );
+
+  readonly favouriteItems$ = this.select(this.items$, (items) =>
+    items.filter((item) => item.favourited)
   );
 
   readonly toggleItemToShoppingList = this.updater((state, id: string) => {
@@ -63,7 +74,9 @@ export class GroceryStore extends ComponentStore<GroceryStoreState> {
 
   readonly viewDetails = this.effect((itemId$: Observable<string>) =>
     itemId$.pipe(
-      tap((itemId) => {
+      withLatestFrom(this.itemIds$),
+      filter(([id, items]) => items.includes(id)),
+      tap(([itemId]) => {
         void this.router.navigate(['/item-detail', itemId, 'summary']);
       })
     )

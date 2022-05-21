@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GroceryStore } from './tabs.store';
+import { GroceryStore } from './grocery.store';
 
 @Component({
   selector: 'app-tabs',

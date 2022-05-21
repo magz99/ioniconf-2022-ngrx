@@ -2,13 +2,13 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { EmptyState } from '../shared/constants';
-import { GroceryStore } from '../tabs/tabs.store';
+import { GroceryStore } from '../tabs/grocery.store';
 
 @Injectable()
 export class FavouritesStore extends ComponentStore<EmptyState> {
-  private readonly items$ = this.select(this.tabsStore.items$, (items) =>
-    items.filter((item) => item.favourited)
-  );
+  private readonly items$ = this.groceryStore.favouriteItems$;
+
+  private readonly shoppingListIds$ = this.groceryStore.shoppingListIds$;
 
   private readonly count$ = this.select(this.items$, (items) => items.length);
 
@@ -17,14 +17,16 @@ export class FavouritesStore extends ComponentStore<EmptyState> {
    */
   readonly viewModel$ = this.select(
     this.items$,
+    this.shoppingListIds$,
     this.count$,
-    (items, count) => ({
+    (items, shoppingListIds, count) => ({
       items,
+      shoppingListIds,
       count,
     })
   );
 
-  constructor(private readonly tabsStore: GroceryStore) {
+  constructor(private readonly groceryStore: GroceryStore) {
     super({});
   }
 }

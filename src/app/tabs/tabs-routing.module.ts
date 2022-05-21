@@ -24,20 +24,20 @@ const routes: Routes = [
       {
         path: 'favourites-list',
         loadChildren: () =>
-          import('../favourites/favourites.module').then(
+          import('../favourites-list/favourites.module').then(
             (m) => m.FavouritesPageModule
           ),
       },
       {
         path: '',
-        redirectTo: '/tabs/shopping-list',
+        redirectTo: '/tabs/grocery-list',
         pathMatch: 'full',
       },
     ],
   },
   {
     path: '',
-    redirectTo: '/tabs/shopping-list',
+    redirectTo: '/tabs/grocery-list',
     pathMatch: 'full',
   },
 ];
