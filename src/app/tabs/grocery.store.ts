@@ -91,6 +91,11 @@ export class GroceryStore extends ComponentStore<GroceryStoreState> {
     };
   });
 
+  readonly clearShoppingList = this.updater((state) => ({
+    ...state,
+    shoppingListIds: [],
+  }));
+
   readonly viewDetails = this.effect((itemId$: Observable<string>) =>
     itemId$.pipe(
       withLatestFrom(this.itemIds$),

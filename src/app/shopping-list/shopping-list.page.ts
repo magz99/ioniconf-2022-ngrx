@@ -13,7 +13,7 @@ export class ShoppingListPage {
   constructor(private readonly store: ShoppingListStore) {}
 
   clearShoppingList(): void {
-    console.log('implement clearShoppingList!');
+    this.store.clearShoppingList();
   }
 
   setItemPurchased(itemId: string): void {

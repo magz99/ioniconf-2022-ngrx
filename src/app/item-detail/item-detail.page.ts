@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SegmentChangeEventDetail } from '@ionic/angular';
 import { ItemDetailStore } from './item-detail.store';
 
@@ -15,7 +9,7 @@ import { ItemDetailStore } from './item-detail.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ItemDetailStore],
 })
-export class ItemDetailPage implements OnDestroy {
+export class ItemDetailPage {
   readonly vm$ = this.store.vm$;
 
   constructor(private readonly store: ItemDetailStore) {
@@ -29,9 +23,5 @@ export class ItemDetailPage implements OnDestroy {
 
     // Call the updater to update the selectedSegment
     this.store.navigateToSegment(segmentValue);
-  }
-
-  ngOnDestroy(): void {
-    console.log('item detail page: destroy');
   }
 }

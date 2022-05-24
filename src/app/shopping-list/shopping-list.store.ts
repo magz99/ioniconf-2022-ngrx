@@ -36,6 +36,8 @@ export class ShoppingListStore extends ComponentStore<EmptyState> {
 
   readonly toggleItemIsPurchased = this.groceryStore.toggleItemIsPurchased;
 
+  readonly clearShoppingList = this.groceryStore.clearShoppingList;
+
   constructor(private readonly groceryStore: GroceryStore) {
     super({});
   }

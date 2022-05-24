@@ -6,6 +6,7 @@ import { catchError, switchMap, take, tap } from 'rxjs/operators';
 import { DataService } from '../data/data-service';
 import { RouterStateService } from '../router/router-state.service';
 import { EmptyState } from '../shared/constants';
+import { GroceryStore } from '../tabs/grocery.store';
 
 @Injectable()
 export class ItemDetailStore extends ComponentStore<EmptyState> {
@@ -18,12 +19,20 @@ export class ItemDetailStore extends ComponentStore<EmptyState> {
     catchError((err: unknown) => EMPTY)
   );
 
+  readonly isFavourited$ = this.select(
+    this.itemId$,
+    this.groceryStore.favouritesListIds$,
+    (itemId, favouritesList) => favouritesList.includes(itemId)
+  );
+
   readonly vm$ = this.select(
     this.selectedSegment$,
     this.itemData$,
-    (selectedSegment, itemData) => ({
+    this.isFavourited$,
+    (selectedSegment, itemData, isFavourited) => ({
       selectedSegment,
       itemData,
+      isFavourited,
     })
   );
 
@@ -45,7 +54,8 @@ export class ItemDetailStore extends ComponentStore<EmptyState> {
   constructor(
     private readonly router: Router,
     private readonly routerStateService: RouterStateService,
-    private readonly dataService: DataService
+    private readonly dataService: DataService,
+    private readonly groceryStore: GroceryStore
   ) {
     super({});
   }
